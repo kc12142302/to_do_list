@@ -34,6 +34,9 @@ function App() {
           placeholder="Enter a task"
           value={task}
           onChange={(e) => setTask(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') addTask()
+          }}
         />
 
         <button onClick={addTask}>Add</button>
