@@ -8,12 +8,20 @@ function App() {
   function addTask() {
     if (task.trim() === '') return
 
-    setTasks([...tasks, task])
+    setTasks([...tasks, { text: task, completed: false }])
     setTask('')
   }
 
   function deleteTask(index) {
     setTasks(tasks.filter((_, i) => i !== index))
+  }
+
+  function toggleTask(index) {
+    setTasks(
+      tasks.map((t, i) =>
+        i === index ? { ...t, completed: !t.completed } : t
+      )
+    )
   }
 
   return (
@@ -33,8 +41,15 @@ function App() {
 
       <ul>
         {tasks.map((item, index) => (
-          <li key={index}>
-            <span>{item}</span>
+          <li key={index} className={item.completed ? 'completed' : ''}>
+            <div className="task-content">
+              <input
+                type="checkbox"
+                checked={item.completed}
+                onChange={() => toggleTask(index)}
+              />
+              <span>{item.text}</span>
+            </div>
             <button onClick={() => deleteTask(index)}>Delete</button>
           </li>
         ))}
